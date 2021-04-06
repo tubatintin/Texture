@@ -39,6 +39,7 @@
     unsigned int allowsSelection:1; // default is YES
     unsigned int allowsMultipleSelection:1; // default is NO
     unsigned int inverted:1; //default is NO
+    unsigned int invertedForRTL:1; //default is NO
     unsigned int alwaysBounceVertical:1;
     unsigned int alwaysBounceHorizontal:1;
     unsigned int animatesContentOffset:1;
@@ -54,6 +55,7 @@
 @property (nonatomic) BOOL allowsSelection; // default is YES
 @property (nonatomic) BOOL allowsMultipleSelection; // default is NO
 @property (nonatomic) BOOL inverted; //default is NO
+@property (nonatomic) BOOL invertedForRTL; //default is NO
 @property (nonatomic) ASCellLayoutMode cellLayoutMode;
 @property (nonatomic) CGFloat leadingScreensForBatching;
 @property (nonatomic, weak) id <ASCollectionViewLayoutInspecting> layoutInspector;
@@ -80,6 +82,7 @@
     _flags.allowsSelection = YES;
     _flags.allowsMultipleSelection = NO;
     _flags.inverted = NO;
+    _flags.invertedForRTL = NO;
     _contentInset = UIEdgeInsetsZero;
     _contentOffset = CGPointZero;
     _flags.animatesContentOffset = NO;
@@ -140,6 +143,16 @@
 -(void)setInverted:(BOOL)inverted
 {
   _flags.inverted = inverted;
+}
+
+- (BOOL)invertedForRTL
+{
+  return _flags.invertedForRTL;
+}
+
+-(void)setInvertedForRTL:(BOOL)invertedForRTL
+{
+  _flags.invertedForRTL = invertedForRTL;
 }
 
 -(BOOL)alwaysBounceVertical
@@ -317,6 +330,7 @@
     view.asyncDelegate                  = pendingState.delegate;
     view.asyncDataSource                = pendingState.dataSource;
     view.inverted                       = pendingState.inverted;
+    view.invertedForRTL                 = pendingState.invertedForRTL;
     view.allowsSelection                = pendingState.allowsSelection;
     view.allowsMultipleSelection        = pendingState.allowsMultipleSelection;
     view.cellLayoutMode                 = pendingState.cellLayoutMode;
@@ -449,6 +463,26 @@
     return _pendingState.inverted;
   } else {
     return self.view.inverted;
+  }
+}
+
+- (void)setInvertedForRTL:(BOOL)invertedForRTL
+{
+  self.transform = invertedForRTL ? CATransform3DMakeScale(-1, 1, 1)  : CATransform3DIdentity;
+  if ([self pendingState]) {
+    _pendingState.invertedForRTL = invertedForRTL;
+  } else {
+    ASDisplayNodeAssert([self isNodeLoaded], @"ASCollectionNode should be loaded if pendingState doesn't exist");
+    self.view.invertedForRTL = invertedForRTL;
+  }
+}
+
+- (BOOL)invertedForRTL
+{
+  if ([self pendingState]) {
+    return _pendingState.invertedForRTL;
+  } else {
+    return self.view.invertedForRTL;
   }
 }
 

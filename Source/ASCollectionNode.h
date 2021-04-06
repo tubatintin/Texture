@@ -88,6 +88,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) BOOL inverted;
 
+/*
+ * A Boolean value that determines whether the collection node will be flipped for RTL.
+ * If the value of this property is YES, the first cell node will be on the right of the collection node (as opposed to the left by default). This is for right-to-left languages. The default value is NO.
+ */
+@property (nonatomic) BOOL invertedForRTL;
+
 /**
  * A Boolean value that indicates whether users can select items in the collection node.
  * If the value of this property is YES (the default), users can select items. If you want more fine-grained control over the selection of items, you must provide a delegate object and implement the appropriate methods of the UICollectionNodeDelegate protocol.
