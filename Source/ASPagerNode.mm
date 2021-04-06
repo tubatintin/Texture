@@ -117,7 +117,8 @@
 - (void)scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated
 {
   NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-  [self scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:animated];
+  BOOL shouldRenderRTLLayout = [UIView userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute] == UIUserInterfaceLayoutDirectionRightToLeft;
+  [self scrollToItemAtIndexPath:indexPath atScrollPosition:(shouldRenderRTLLayout ? UICollectionViewScrollPositionRight : UICollectionViewScrollPositionLeft) animated:animated];
 }
 
 - (ASCellNode *)nodeForPageAtIndex:(NSInteger)index
