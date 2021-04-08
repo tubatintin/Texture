@@ -88,7 +88,7 @@ BOOL ASDisplayShouldFetchBatchForContext(ASBatchContext *context,
 
   CGFloat triggerDistance = viewLength * leadingScreens;
   CGFloat remainingDistance = contentLength - viewLength - offset;
-  if (shouldRenderRTLLayout && ASScrollDirectionContainsLeft(scrollDirection)) {
+  if (shouldRenderRTLLayout && ASScrollDirectionContainsLeft(scrollableDirections)) {
       remainingDistance = offset;
   } else {
       remainingDistance = contentLength - viewLength - offset;
