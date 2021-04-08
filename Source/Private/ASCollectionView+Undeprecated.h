@@ -60,6 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGFloat leadingScreensForBatching;
 
 @property (nonatomic) BOOL inverted;
+@property (nonatomic) BOOL invertedForRTL;
 
 @property (nonatomic, readonly) ASScrollDirection scrollDirection;
 

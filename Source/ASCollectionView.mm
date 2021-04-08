@@ -101,6 +101,7 @@ static NSString * const kReuseIdentifier = @"_ASCollectionReuseIdentifier";
   // we don't want to tell the collection view about the change (it knows!)
   BOOL _updatingInResponseToInteractiveMove;
   BOOL _inverted;
+  BOOL _invertedForRTL;
   
   NSUInteger _superBatchUpdateCount;
   BOOL _isDeallocating;
@@ -1697,6 +1698,16 @@ static NSString * const kReuseIdentifier = @"_ASCollectionReuseIdentifier";
   _inverted = inverted;
 }
 
+- (BOOL)invertedForRTL
+{
+  return _invertedForRTL;
+}
+
+- (void)setInvertedForRTL:(BOOL)invertedForRTL
+{
+  _invertedForRTL = invertedForRTL;
+}
+
 - (void)setLeadingScreensForBatching:(CGFloat)leadingScreensForBatching
 {
   if (_leadingScreensForBatching != leadingScreensForBatching) {
@@ -1990,6 +2001,9 @@ static NSString * const kReuseIdentifier = @"_ASCollectionReuseIdentifier";
     }
     if (strongSelf.inverted) {
       node.transform = CATransform3DMakeScale(1, -1, 1);
+    }
+    if (strongSelf.invertedForRTL) {
+      node.transform = CATransform3DMakeScale(-1, 1, 1);
     }
     return node;
   };
